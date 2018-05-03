@@ -1,0 +1,116 @@
+SBT-raytracer 1.0
+
+// custom2.ray
+// Test texture mapping
+// Don't forget to increase the trace depth to >= 2!
+
+camera
+{
+	position = (15, 0, 5);
+	viewdir = (-1, 0, -.3);
+	updir = (0, 0, 1);
+}
+
+directional_light
+{
+	direction = (-0.2, 0.2, -2);
+	color = (.7, .7, .7);
+}
+
+directional_light
+{
+	direction = (-1, -0.5, -0.3);
+	color = (.6, .6, .6);
+}
+
+point_light {
+	position = (5,-4,2);
+	colour = (1.0,1.0,0.7)
+	constant_attenuation_coeff= 0.25;
+	linear_attenuation_coeff = 0.003372407;
+	quadratic_attenuation_coeff = 0.000045492;	
+}
+
+// The box forms a plane, which should reflect the objects
+translate( 0, 0, -2,
+	scale( 15, 15, 1, 
+		box {
+			material = { 
+				diffuse = map( "checkerboard.bmp" ); 
+				specular = (0.5, 0.5, 0.5);
+				reflective = (0, 0, 0);
+				shininess = 25.6;
+			}
+		} ) )
+
+translate( 0, 0, 2,
+	scale( 2,
+	sphere {
+		material = { 
+			specular = (0.8, 0.8, 0);
+			reflective = (0.7, 0.7, 0);
+			diffuse = (0.2, 0.2, 0);
+			shininess = 256.0;
+		}
+	}
+) )
+
+ translate(-4,-4,-2,
+ 	scale(2.5,
+		sphere { 
+			material = { 
+				diffuse = (0.4,0.4,0);
+				specular = (0.8,0.8,0);
+				shininess = 102.4;
+			} 
+		}))
+
+// Green sphere
+translate(5,2,1.5,
+	scale(1,
+		sphere { 
+			material = { 
+				diffuse = (0.0,0.4,0.4);
+				specular = (0.0,0.8,0.8);
+				shininess = 115.2;
+			} 
+		}))
+
+
+// Sides and Back, which should reflect the objects
+// The box forms a plane, which should reflect the objects
+// Left Wall
+translate( 0,-7,3,
+	scale(20,
+		rotate(1,0,0,-1.57,
+			square { 
+				material = { 
+				diffuse = map( "checkerboard.bmp" ); 
+				specular = (0.5, 0.5, 0.5);
+				reflective = (0, 0, 0);
+				shininess = 25.6;
+			}})))
+
+// Right Wall
+translate( 0,7,3,
+	scale(20,
+		rotate(1,0,0,-1.57,
+			square { 
+				material = { 
+				diffuse = map( "checkerboard.bmp" ); 
+				specular = (0.5, 0.5, 0.5);
+				reflective = (0, 0, 0);
+				shininess = 25.6;
+			}})))
+
+// Back Wall
+translate( -7,0,3,
+	scale(20,
+		rotate(0,1,0,-1.57,
+			square { 
+				material = { 
+				diffuse = map( "checkerboard.bmp" ); 
+				specular = (0.5, 0.5, 0.5);
+				reflective = (0, 0, 0);
+				shininess = 25.6;
+			}})))
